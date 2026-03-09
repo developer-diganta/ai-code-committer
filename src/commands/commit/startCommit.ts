@@ -11,7 +11,6 @@ import { diff } from 'node:util';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 let apiKey = loadApiKey();
-const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 export default async () => {
   try {
@@ -21,7 +20,7 @@ export default async () => {
       saveApiKey(apiKey);
       console.log('API key saved!');
     }
-
+    let ai = new GoogleGenAI({ apiKey });
     log(chalk.green('Starting commit process!'));
 
     // 1️⃣ Get staged files
@@ -48,7 +47,6 @@ export default async () => {
 
     // 6️⃣ Build AI prompt
     const prompt = buildCommitPrompt(diffSummary);
-    const prompt1 = fileNameBasedCommitPrompt(filenames);
 
     console.log({ prompt });
     // const diff = await getStagedDiff(filenames);
@@ -60,11 +58,6 @@ export default async () => {
     });
     console.log(response.text);
 
-    const response2 = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt1,
-    });
-    console.log(response2.text);
     // 8️⃣ Commit
     // await gitCommit(response.text);
   } catch (err) {
