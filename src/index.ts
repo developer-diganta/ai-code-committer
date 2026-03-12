@@ -1,27 +1,38 @@
 #!/usr/bin/env node
 import 'dotenv/config';
+import minimist from 'minimist';
 import runConfig from './utils/runConfig';
-import startCommit from './commands/commit/startCommit';
 import runCommit from './utils/runCommit';
+import chalk from 'chalk';
 
 const startCommandExecution = async () => {
-  const args = process.argv.slice(2);
+  const args = minimist(process.argv.slice(2));
 
-  const command = args[0];
-  console.log({ command });
+  const command = args._[0];
+
+  const subArgs = {
+    ...args,
+    _: args._.slice(1),
+  };
+  console.log('');
+  console.log(chalk.bold.bgBlue(' 🚀 AI-SHIP ') + chalk.bold.blue(' Commit Generator '));
+  console.log(chalk.dim('==================================='));
+  console.log('');
 
   switch (command) {
     case 'commit':
-      await runCommit(args.slice(1));
+      const { _, ...flags } = subArgs;
+      await runCommit(_, flags);
       break;
 
     case 'config':
-      await runConfig(args.slice(1)[0]);
+      await runConfig(subArgs);
       break;
 
     default:
-      await startCommit();
+      console.log('Unknown command');
   }
+  console.log('');
 };
 
 startCommandExecution();

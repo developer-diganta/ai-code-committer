@@ -1,26 +1,39 @@
 {
+  "name": "ai-ship",
+  "version": "1.0.0",
+  "description": "AI-powered commit message generator",
+  "main": "dist/index.js",
+  "bin": {
+    "ai-ship": "./dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "ts-node src/index.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "npm run build"
   },
   "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@types/minimist": "^1.2.5",
     "@types/node": "^25.3.5",
     "prettier": "^3.8.1",
+    "rxjs": "^7.8.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
-  "name": "auto-commiter",
-  "version": "1.0.0",
-  "main": "index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "@google/genai": "^1.44.0",
+    "@types/inquirer": "^8.2.12",
     "chalk": "^4.1.2",
     "dotenv": "^17.3.1",
-    "minimatch": "^10.2.4"
+    "enquirer": "^2.4.1",
+    "inquirer": "^8.2.7",
+    "lodash": "^4.17.23",
+    "minimatch": "^10.2.4",
+    "minimist": "^1.2.8",
+    "ora": "^5.4.1"
   }
 }
